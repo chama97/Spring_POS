@@ -1,59 +1,48 @@
-/*
+var itemUrl = "http://localhost:8080/BackEnd_war/api/v1/item";
+
 $("#btnGetAllItems").click(function () {
     loadAllItems();
 });
 
 $("#btnSaveItem").click(function () {
-    var data = $("#itemForm").serialize(); // return query string of form with name:type-value
+    var data = $("#itemsForm").serialize();
     $.ajax({
-        url: "http://localhost:8080/BackEnd/item",
+        url: itemUrl,
         method: "POST",
-        data: data,// if we send data with the request
+        data: data,
         success: function (res) {
-            if (res.status == 200) {
-                alert(res.message);
+            if (res.code == 200) {
+                alert("Successfully Item Registered");
                 loadAllItems();
-            } else {
-                alert(res.data);
             }
         },
-        error: function (ob, textStatus, error) {
-            console.log(ob);
-            console.log(textStatus);
-            console.log(error);
+        error: function (ob) {
+            alert(ob.responseJSON.message);
         }
     });
 });
 
 
 $("#btnDeleteItem").click(function () {
-
     let itemID = $("#itemCode").val();
     $.ajax({
-        url: "http://localhost:8080/BackEnd/item?ItemCode=" + itemID,// viya query string
+        url: itemUrl + "?code=" + itemID,
         method: "DELETE",
-        //data:data,// application/x-www-form-urlencoded
         success: function (res) {
             console.log(res);
-            if (res.status == 200) {
-                alert(res.message);
+            if (res.code == 200) {
+                alert("Item Successfully Deleted");
                 loadAllItems();
-            } else if (res.status == 400) {
-                alert(res.data);
-            } else {
-                alert(res.data);
             }
         },
-        error: function (ob, status, t) {
-            console.log(ob);
-            console.log(status);
-            console.log(t);
+        error: function (ob) {
+            alert(ob.responseJSON.message);
         }
     });
 });
 
-$("#btnUpdateItem").click(function () {
 
+$("#btnUpdateItem").click(function () {
     var itOb = {
         code: $("#itemCode").val(),
         type: $("#itemType").val(),
@@ -61,32 +50,30 @@ $("#btnUpdateItem").click(function () {
         price: $("#itemPrice").val()
     }
     $.ajax({
-        url: "http://localhost:8080/BackEnd/item",
+        url: itemUrl,
         method: "PUT",
+        contentType: "application/json",
         data: JSON.stringify(itOb),
         success: function (res) {
-            if (res.status == 200) {
-                alert(res.message);
+            if (res.code == 200) {
+                alert("Successfully Updated");
                 loadAllItems();
-            } else if (res.status == 400) {
-                alert(res.message);
-            } else {
-                alert(res.data);
             }
         },
-        error: function (ob, errorStus) {
-            console.log(ob);
+        error: function (ob) {
+            alert(ob.responseJSON.message);
         }
     });
 });
 
+
 $("#btnItemSearch").click(function () {
     var searchID = $("#txtItemSearch").val();
     $.ajax({
-        url: "http://localhost:8080/BackEnd/item?option=SEARCH&searchItemID="+searchID,
+        url: itemUrl + "/" + searchID,
         method: "GET",
         success: function (res) {
-            if (res.status == 200) {
+            if (res.code == 200) {
                 $("#itemCode").val(res.data.code);
                 $("#itemType").val(res.data.type);
                 $("#itemQty").val(res.data.qty);
@@ -95,10 +82,8 @@ $("#btnItemSearch").click(function () {
                 alert(res.data);
             }
         },
-        error: function (ob, textStatus, error) {
-            console.log(ob);
-            console.log(textStatus);
-            console.log(error);
+        error:function (ob){
+            alert(ob.responseJSON.message);
         }
     });
 });
@@ -108,7 +93,7 @@ loadAllItems();
 function loadAllItems() {
     $("#tblItem").empty();
     $.ajax({
-        url: "http://localhost:8080/BackEnd/item?option=GETALL",
+        url: itemUrl,
         method: "GET",
         success: function (resp) {
             for (const item of resp.data) {
@@ -291,4 +276,3 @@ $('#btnItemAdd').click(function () {
 });
 
 
-*/

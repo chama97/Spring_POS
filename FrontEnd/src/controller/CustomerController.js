@@ -5,11 +5,11 @@ $("#btnGetAllCustomers").click(function () {
 });
 
 $("#btnSaveCustomer").click(function () {
-    var data = $("#customerForm").serialize(); // return query string of form with name:type-value
+    var data = $("#customerForm").serialize();
     $.ajax({
         url: baseUrl,
         method: "POST",
-        data: data,// if we send data with the request
+        data: data,
         success: function (res) {
             if (res.code == 200) {
                 alert("Successfully Customer Registered");
@@ -71,13 +71,12 @@ $("#btnUpdateCustomer").click(function () {
     $.ajax({
         url: baseUrl,
         method: "PUT",
-        contentType: "application/json", //You should state request's content type using MIME types
-        data: JSON.stringify(cusOb), // format js object to valid json string
+        contentType: "application/json",
+        data: JSON.stringify(cusOb),
         success: function (res) {
-            if (res.code == 200) { // process is  ok
+            if (res.code == 200) {
                 alert("Successfully Updated");
                 loadAllCustomers();
-                clearForm();
             }
         },
         error: function (ob) {

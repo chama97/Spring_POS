@@ -1,15 +1,14 @@
-function CartTM(code,type,qty,price,total) {
+function CartTM(oid,code,qty,price) {
+    var __orderId=oid;
     var __itemCode=code;
-    var __itemType=type;
     var __itemQty=qty;
     var __itemPrice=price;
-    var __totalPrice=total;
 
+    this.getOrderId=function () {
+        return __orderId;
+    }
     this.getItemCode=function () {
         return __itemCode;
-    }
-    this.getItemType=function () {
-        return __itemType;
     }
     this.getItemQty=function () {
         return __itemQty;
@@ -17,23 +16,17 @@ function CartTM(code,type,qty,price,total) {
     this.getItemPrice=function (){
         return __itemPrice;
     }
-    this.getTotalPrice=function (){
-        return __totalPrice;
+    this.setOrderId=function (oid) {
+        __orderId=oid;
     }
     this.setItemCode=function (code) {
         __itemCode=code;
-    }
-    this.setItemType=function (type) {
-        __itemType=type;
     }
     this.setItemQty=function (qty) {
         __itemQty=qty;
     }
     this.setItemPrice=function (price){
         __itemPrice=price;
-    }
-    this.setTotalPrice=function (total){
-        __totalPrice=total;
     }
 }
 

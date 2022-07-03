@@ -19,11 +19,10 @@ public class AppWideExceptionHandler {
 //        return new ResponseEntity(new ResponseUtil(500, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
     public ResponseUtil exceptionHandler(Exception e) {
+
         return new ResponseUtil(500, e.getMessage(), null);
     }
-
 }
